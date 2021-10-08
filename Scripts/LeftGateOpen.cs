@@ -1,0 +1,66 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LeftGateOpen : MonoBehaviour
+{
+    public GameObject movingDoor;
+
+    public float maximumOpening = -10f;
+    public float maximumClosing = 0f;
+
+    public float movementSpeed = 5f;
+
+    bool playerIsHere;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerIsHere = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (playerIsHere == true)
+        {
+            if (movingDoor.transform.position.x > maximumOpening)
+            {
+                movingDoor.transform.Translate(movementSpeed * Time.deltaTime, 0f, 0f);
+
+            }
+        }
+        else
+        {
+            if (movingDoor.transform.position.x < maximumClosing)
+            {
+                movingDoor.transform.Translate(-movementSpeed * Time.deltaTime, 0f, 0f);
+              
+            }
+            else
+            {
+
+            }
+        }
+        Debug.Log(movingDoor.transform.position);
+
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            playerIsHere = true;
+            Debug.Log("hi");
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            playerIsHere = false;
+        }
+    }
+}
+
